@@ -31,7 +31,13 @@ function onRequest(request, response){
   console.log("User made a request for " + request.url);
   if(request.url.startsWith("/_db/")){
     //DB is database calls
-    console.log(`database access with raw of ${request.url}`);
+    //Replace delimited characters with proper characters
+    var reqdata = request.url.split("%7B").join("{");
+    reqdata = reqdata.split("%7D").join("}");
+    reqdata = reqdata.split("%20").join(" ");
+    reqdata = JSON.parse(request.url.substring(5));
+    if(reqdata.data) DB_MASTER.query(reqdata.data);
+    console.log(`Database access with raw of ${request.url} and a request of ${reqdata}`);
   }else if(request.url.startsWith("/_asset/")){
     //Asset is Javascript or CSS
 
