@@ -9,18 +9,18 @@ var server;
 var configs = {};
 const DB_MASTER= mysql.createConnection({
 	host: "localhost",
-	user: "admin",
+	user: "root",
 	password: "admin"
 });
 
 function setupDatabase(database){
 	DB_MASTER.connect(function(err) {
-		if(err) console.log("Error connecting to database");
+		if(err) throw err;//console.log("Error connecting to database");
 		else{
 			console.log("Connected to MySQL");
 			DB_MASTER.query("use " + database, function(err) {
 				if(err) console.log("Error connecting to the database " + robotics);
-				else console.log("Server is using the database " + databse);
+				else console.log("Server is using the database " + database);
 			});
 		}
 	});
@@ -134,5 +134,5 @@ function reloadServerCFGs(){
 
 server = http.createServer(onRequest);
 server.listen(3000);
-setupDatabase("Robotics");
+setupDatabase("robotics");
 console.log("Server is now running...");
