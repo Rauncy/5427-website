@@ -5,6 +5,8 @@ function onRequest(request, response){
   response.writeHead(200, {"Context-Type": "text/plain"});
   response.write("Data has been sent");
   response.end();
+
+  //Supply correct data and pages
 }
 
 http.createServer(onRequest).listen(3000);
