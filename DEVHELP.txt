@@ -1,0 +1,29 @@
+DEVHELP explains how the hell the site should work and practices involved with the site
+
+"Webpages" folder:
+  Contains all webpages and data that belongs on the webpage
+  "Index" is the root directory
+
+"CFG" folder:
+  Folder that contains configuration files and settings
+
+"Practice" folder:
+  Never referenced in the server side and should be only for testing skills
+  Has it's own folder due to the redundancy of branching off and merging later for test materials
+
+"DEVHELP" txt:
+  Explains how things on the site should be, and for the most part are
+
+"README" txt:
+  Explains what the site is supposed to do
+  Designed for the end user to read
+
+"Server" js:
+  Basic node.js file for the server to run
+  Functionality:
+    Takes all http requests:
+      Uploads
+      Page requests
+      Downloads
+    Supplies end user with a proper webpage and resources or resource references such as pictures and external files.
+    Able to use other node.js scripts to achieve goals such as database interface and
