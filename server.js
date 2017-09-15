@@ -4,18 +4,14 @@ var server;
 
 function onRequest(request, response){
   console.log("User made a request for " + request.url);
-  if(request.url.endsWith(".css")){
-
-  }else if(request.url.endsWith(".js"){
-
-  }else if(request.url.startsWith("/_db/")){
-
+  if(request.url.startsWith("/_db/")){
+    console.log(`database access with raw of ${request.url}`);
   }else if(request.url.startsWith("/_asset/")){
-
+    console.log(`Loading asset from webpages directory with filename of ${request.url}`);
   }else if(request.url.startsWith("/_data/")){
-
+    console.log(`Getting data from ${request.url}`)
   }else{
-
+    //Is HTML page
     response.writeHead(200, {"Context-Type" : "text/html"});
 
     response.write(fs.readFile(`./webpages${webpages}`));
