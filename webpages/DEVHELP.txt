@@ -1,0 +1,11 @@
+DEVHELP explains how the hell the site should work and practices involved with the site
+
+Files not beginning with a character:
+  Files that start with an underscore (_) are meant to be used as fragments to where the node can insert the code in that file to the page being loaded. !UNIMPLEMENTED!
+  Files that start with a carrot (^) are meant to be used as templates to where the requested html is rendered within that template. !UNIMPLEMENTED!
+
+Files not ending in ".html":
+  Files that end with a hash/pound/number (#) show that the parameters occurring after the files location are all variable based and how many should be included. !UNIMPLEMENTED!
+
+Folders within the directory:
+  Each folder represents a new layer of navigation that you have to enter into the URL box.

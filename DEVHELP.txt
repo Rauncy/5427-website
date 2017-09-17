@@ -5,7 +5,7 @@ DEVHELP explains how the hell the site should work and practices involved with t
   "Index" is the root directory
 
 "CFG" folder:
-  Folder that contains configuration files and settings
+  Folder that contains configuration files and settings for Node.js
 
 "Practice" folder:
   Never referenced in the server side and should be only for testing skills

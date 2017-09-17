@@ -1,0 +1,8 @@
+roles.cfg:
+  Stores all the roles in a cfg file until the server starts or refreshes cfg files.
+  Lower numbers mean you inherit all higher numbers permissions and access
+  Negative numbers mean that a page is accessible to users with permission lower than or equal to abs(level) or people with that tag on
+
+  Key: The abbreviation for the role
+    Name: The formal name of the role
+    Level: The priority level given
