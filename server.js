@@ -107,10 +107,10 @@ function processInlineCFGs(html, path, reference){
         if(toProcess.useTemplate){
           html = html.substring(html.indexOf("</cfg>")+6);
           return processInlineCFGs(fs.readFileSync(`./webpages/${toProcess.useTemplate}.html`, "UTF-8"), "/"+toProcess.useTemplate, html);
-        }else{
+        } else{
           console.log(`Configs with a type of "content" must have a valid "useTemplate" tag set to the template html`);
         }
-      }else if(toProcess.type=="template"){
+      } else if(toProcess.type=="template"){
         if(reference){
           tempHTML=tempHTML.substring(0, tempHTML.indexOf("<cfg>"))+reference+tempHTML.substring(tempHTML.indexOf("</cfg>")+6);
           continue;
