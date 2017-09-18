@@ -48,22 +48,7 @@ function onRequest(request, response){
   }else{
     //Is HTML page
     console.log("HTML");
-    response.setHeader('Content-Type', 'text/html');
-
-    var page;
-    try{
-      if(request.url.split()) page = fs.readFileSync(`./webpages${request.url}.html`, "UTF-8");
-    }catch(err){
-      //Test index
-      try{
-        page = fs.readFileSync(`./webpages${request.url}/index.html`, "UTF-8");
-      }catch(indexErr){
-        //404
-        response.writeHead(404);
-        page = fs.readFileSync("./_assets/404.html");
-      }
-    }
-
+    page = loadHTML(request.url, response);
   }
   response.write(page);
   response.end();
@@ -72,30 +57,80 @@ function onRequest(request, response){
 function loadHTML(url, res){
   var page;
 
-  respose.setHeader('Content-Type', 'text/html');
+  res.setHeader('Content-Type', 'text/html');
+
+  var path;
 
   //If has with illegal characters
-  if(url.contains(/^?_/)) {
-    response.writeHead(404);
-    return fs.readFileSync("./_assets/404.html", "UTF-8");
+  if(url.includes("^") || url.includes("_")) {
+    res.writeHead(404);
+    path = fs.readFileSync("./_assets/404.html", "UTF-8");
+    console.log(`Data404 : ${url}`);
   }else{
     //Check for non index Files
     try{
-      return fs.readFileSync(`./wepages${request.url}/index.html`, "UTF-8");
+      console.log(`/webpages${url}/index.html : ${url}`);
+      path = fs.readFileSync(`./webpages${url}/index.html`, "UTF-8");
+      res.writeHead(200);
     }catch(nie){
       //Check for index files
       try{
-        return fs.readFileSync(`./webpages${request.url}.html`);
+        console.log(`/webpages${url}.html : ${url}`);
+        path = fs.readFileSync(`./webpages${url}.html`, "UTF-8");
+        res.writeHead(200);
       }catch(err){
         //Return 404;
-        response.writeHead(404);
-        return fs.readFileSync("./_asets/404.html")
+        res.writeHead(404);
+        path = fs.readFileSync("./_assets/404.html");
+        console.log(`DNE404 : ${url}`);
       }
     }
   }
+
+  path = processInlineCFGs(path, url, null);
+
+  return path;
 }
 
-function reloadCFGs(){
+function processInlineCFGs(html, path, reference){
+  var tempHTML = html;
+  var toProcess;
+
+  while(tempHTML.includes("<cfg>")){
+    //Get raw text
+    toProcess=JSON.parse(tempHTML.substring(tempHTML.indexOf("<cfg>")+5, tempHTML.indexOf("</cfg>")));
+
+    //Test for header
+    if(toProcess.type){
+      if(toProcess.type=="content"){
+        //Check for template and place in
+        if(toProcess.useTemplate){
+          html = html.substring(html.indexOf("</cfg>")+6);
+          return processInlineCFGs(fs.readFileSync(`./webpages/${toProcess.useTemplate}.html`, "UTF-8"), "/"+toProcess.useTemplate, html);
+        }else{
+          console.log(`Configs with a type of "content" must have a valid "useTemplate" tag set to the template html`);
+        }
+      }else if(toProcess.type=="template"){
+        if(reference){
+          tempHTML=tempHTML.substring(0, tempHTML.indexOf("<cfg>"))+reference+tempHTML.substring(tempHTML.indexOf("</cfg>")+6);
+          continue;
+        }else{
+          console.log('Configs with a type of "template" must have a valid "content" html to load into');
+        }
+      }else if(toProcess.type=="fragment"){
+        console.log("Attempted to use an unimplemented feature, FRAGMENT");
+      }else{
+        console.log(`Type "${type}" not recognized in ${path}`)
+      }
+    }
+
+    tempHTML=tempHTML.substring(0, tempHTML.indexOf("<cfg>")) + tempHTML.substring(tempHTML.indexOf("</cfg>")+6);
+  }
+
+  return tempHTML;
+}
+
+function reloadServerCFGs(){
 
 }
 
