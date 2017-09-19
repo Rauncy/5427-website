@@ -104,9 +104,9 @@ function processInlineCFGs(html, path, reference){
     if(toProcess.type){
       if(toProcess.type=="content"){
         //Check for template and place in
-        if(toProcess.useTemplate){
+        if(toProcess.src){
           html = html.substring(html.indexOf("</cfg>")+6);
-          return processInlineCFGs(fs.readFileSync(`./webpages/${toProcess.useTemplate}.html`, "UTF-8"), "/"+toProcess.useTemplate, html);
+          return processInlineCFGs(fs.readFileSync(`./webpages/${toProcess.src}.html`, "UTF-8"), "/"+toProcess.src, html);
         } else{
           console.log(`Configs with a type of "content" must have a valid "useTemplate" tag set to the template html`);
         }
@@ -118,7 +118,11 @@ function processInlineCFGs(html, path, reference){
           console.log('Configs with a type of "template" must have a valid "content" html to load into');
         }
       }else if(toProcess.type=="fragment"){
-        console.log("Attempted to use an unimplemented feature, FRAGMENT");
+        console.log("Attempted to use an unfinished feature, FRAGMENT");
+        let fragFile = fs.readFileSync(`./webpages/${toProcess.src}.html`, "UTF-8");
+        fragFile = fragFile.substring(fragFile.indexOf("</cfg>")+6);
+
+        tempHTML = tempHTML.substring(0, tempHTML.indexOf("<cfg>"))+fragFile+tempHTML.substring(tempHTML.indexOf("</cfg>")+6);
       }else{
         console.log(`Type "${type}" not recognized in ${path}`)
       }
