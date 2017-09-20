@@ -104,9 +104,9 @@ function processInlineCFGs(html, path, reference){
     if(toProcess.type){
       if(toProcess.type=="content"){
         //Check for template and place in
-        if(toProcess.useTemplate){
+        if(toProcess.src){
           html = html.substring(html.indexOf("</cfg>")+6);
-          return processInlineCFGs(fs.readFileSync(`./webpages/${toProcess.useTemplate}.html`, "UTF-8"), "/"+toProcess.useTemplate, html);
+          return processInlineCFGs(fs.readFileSync(`./webpages/${toProcess.src}.html`, "UTF-8"), "/"+toProcess.src, html);
         }else{
           console.log(`Configs with a type of "content" must have a valid "useTemplate" tag set to the template html`);
         }
