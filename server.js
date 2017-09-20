@@ -113,6 +113,7 @@ function processInlineCFGs(html, path, reference){
       } else if(toProcess.type=="template"){
         if(reference){
           tempHTML=tempHTML.substring(0, tempHTML.indexOf("<cfg>"))+reference+tempHTML.substring(tempHTML.indexOf("</cfg>")+6);
+          //Process CSS and JS fields TODO
           continue;
         }else{
           console.log('Configs with a type of "template" must have a valid "content" html to load into');
@@ -120,8 +121,7 @@ function processInlineCFGs(html, path, reference){
       }else if(toProcess.type=="fragment"){
         console.log("Attempted to use an unfinished feature, FRAGMENT");
         let fragFile = fs.readFileSync(`./webpages/${toProcess.src}.html`, "UTF-8");
-        fragFile = fragFile.substring(fragFile.indexOf("</cfg>")+6);
-
+        fragFile = processInlineCFGs(fragFile, toProcess.src);
         tempHTML = tempHTML.substring(0, tempHTML.indexOf("<cfg>"))+fragFile+tempHTML.substring(tempHTML.indexOf("</cfg>")+6);
       }else{
         console.log(`Type "${type}" not recognized in ${path}`)
