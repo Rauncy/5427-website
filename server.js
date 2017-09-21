@@ -92,23 +92,28 @@ function loadHTML(url, res){
   return path;
 }
 
-function processInlineCFGs(html, path, reference){
+function processInlineCFGs(html, path, reference, data){
   var tempHTML = html;
   var toProcess;
+  if(!data) data = {};
 
   while(tempHTML.includes("<cfg>")){
     //Get raw text
     toProcess=JSON.parse(tempHTML.substring(tempHTML.indexOf("<cfg>")+5, tempHTML.indexOf("</cfg>")));
 
-    //Test for header
+    //Test for type
     if(toProcess.type){
       if(toProcess.type=="content"){
-        //Check for template and place in
+        //See if content is for header or is fragment
         if(toProcess.src){
+          //Template render
           html = html.substring(html.indexOf("</cfg>")+6);
           return processInlineCFGs(fs.readFileSync(`./webpages/${toProcess.src}.html`, "UTF-8"), "/"+toProcess.src, html);
-        } else{
-          console.log(`Configs with a type of "content" must have a valid "useTemplate" tag set to the template html`);
+        }else if(toProcess.src){
+          //Fragment
+          return html.substring(html.indexOf("</cfg>")+6);
+        }else{
+
         }
       } else if(toProcess.type=="template"){
         if(reference){
@@ -119,10 +124,11 @@ function processInlineCFGs(html, path, reference){
           console.log('Configs with a type of "template" must have a valid "content" html to load into');
         }
       }else if(toProcess.type=="fragment"){
-        console.log("Attempted to use an unfinished feature, FRAGMENT");
         let fragFile = fs.readFileSync(`./webpages/${toProcess.src}.html`, "UTF-8");
-        fragFile = processInlineCFGs(fragFile, toProcess.src);
+        fragFile = processInlineCFGs(fragFile, toProcess.src, toProcess.data);
         tempHTML = tempHTML.substring(0, tempHTML.indexOf("<cfg>"))+fragFile+tempHTML.substring(tempHTML.indexOf("</cfg>")+6);
+      }else if(toProcess.type=="data"){
+        //Do data
       }else{
         console.log(`Type "${type}" not recognized in ${path}`)
       }
@@ -130,6 +136,8 @@ function processInlineCFGs(html, path, reference){
 
     tempHTML=tempHTML.substring(0, tempHTML.indexOf("<cfg>")) + tempHTML.substring(tempHTML.indexOf("</cfg>")+6);
   }
+
+  //Do data and other processing after initial template and fragment processing
 
   return tempHTML;
 }
