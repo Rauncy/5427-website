@@ -95,7 +95,9 @@ function loadHTML(url, res){
 function processInlineCFGs(html, path, reference, data){
   var tempHTML = html;
   var toProcess;
-  if(!data) data = {};
+  if(!data) data = {
+    lineRef:{}
+  }};
 
   while(tempHTML.includes("<cfg>")){
     //Get raw text
@@ -129,6 +131,22 @@ function processInlineCFGs(html, path, reference, data){
         tempHTML = tempHTML.substring(0, tempHTML.indexOf("<cfg>"))+fragFile+tempHTML.substring(tempHTML.indexOf("</cfg>")+6);
       }else if(toProcess.type=="data"){
         //Do data
+
+      }else if(toProcess.type == "link"){
+        if(src){
+          //Place in HTML
+        }else if(type){
+          //Set positons
+        }else{
+          //None applicable
+        }
+        let end = toProcess.src.substring(toProcess.indexOf("."));
+        if(data.lineRef[end]){
+          //Insert at line
+          tempHTML.
+        }else{
+          //Insert where declared
+        }
       }else{
         console.log(`Type "${type}" not recognized in ${path}`)
       }
