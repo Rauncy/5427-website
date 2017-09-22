@@ -1,0 +1,51 @@
+.logIn{
+  text-align: center;
+  padding: 2px;
+}
+#sub{
+   text-align: center;
+    font-size: 1.2em;
+}
+
+h2{
+  color: crimson;
+  text-align: center;
+  font-size: 2em;
+}
+
+.labelLog{
+  font-family: 'Oswald', sans-serif;
+  display: block;
+  font-size: 20px;
+}
+
+#logInEmail{
+  margin-left: 20px;
+}
+#logInPassword{
+  margin-left: 20px;
+}
+
+#submit{
+        display: inline-block;
+        background-color: Transparent;
+        background-repeat: no-repeat;
+        border: none;
+        cursor: pointer;
+        overflow: hidden;
+}
+#pass{
+  margin-right: 20px;
+  margin-left: 86px;
+  display: inline-block;
+
+}
+#register{
+  margin-right: 15px;
+}
+#confirm{
+  margin-right: 60px;
+}
+#email{
+  margin-left: 10px;
+}
