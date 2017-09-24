@@ -19,10 +19,10 @@ h2{
   font-size: 20px;
 }
 
-#logInEmail{
+#logInEmail, #registerEmail, #recoveryEmail{
   margin-left: 20px;
 }
-#logInPassword{
+#logInPassword, #registerPassword, #confirmPassword{
   margin-left: 20px;
 }
 
