@@ -70,7 +70,6 @@ header{
   margin:0;
   font-size: 24px;
 }
-
 body{
   margin:0;
 }
@@ -79,5 +78,12 @@ a{
   color: crimson;
 }
 a:hover{
+  color: navy;
+}
+.tab, .horizm{
+  font-family: 'Anton', sans-serif;
+  color: white;
+}
+.tab:hover, .horizm:hover{
   color: #DDDDFF;
 }
