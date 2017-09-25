@@ -80,10 +80,10 @@ a{
 a:hover{
   color: navy;
 }
-.tab{
+.tab, .horizm{
   font-family: 'Anton', sans-serif;
-  color: crimson;
+  color: white;
 }
-.tab:hover{
+.tab:hover, .horizm:hover{
   color: #DDDDFF;
 }
