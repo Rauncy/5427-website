@@ -76,8 +76,8 @@ body{
 }
 a{
   font-family: 'Anton', sans-serif;
-  color: red;
+  color: crimson;
 }
 a:hover{
-  color: blue;
+  color: #DDDDFF;
 }
