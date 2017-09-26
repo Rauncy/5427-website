@@ -3,9 +3,42 @@ h2{
   font-family: 'Josefin Sans', sans-serif;
   font-size: 2em;
 }
+#profilePic{
+   position: relative;
+   width: 100%; /* for IE 6 */
+   margin-left: 6em;
+   margin-top: 1em;
+   float: left;
+   border-radius: 50%;
+}
+
+.imgText{
+   position: absolute;
+   top: 2em;
+   left: 4em;
+   width: 100%;
+   font-family: 'Princess Sofia', cursive;
+   color: transparent;
+}
+
 .img{
-  margin-right: 70px;
-  margin-top: 10px;
-  float: left;
   border-radius: 50%;
+}
+.img:hover{
+  opacity: 0.25;
+}
+.img:hover + .imgText, .imgText:hover{
+  color: crimson;
+}
+.imgText:hover{
+  color: blue;
+}
+.imgText:hover + .img{
+  opacity: 0.25;
+}
+
+#fileSelector{
+  top: 2.2em;
+  left: 5em;
+  opacity: 0;
 }
