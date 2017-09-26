@@ -7,11 +7,17 @@ function processText(params){
     case "data":
       //Process data
       let path = params.src.substring(params.src.indexOf("."));
+      if(params.data[path]){
+        
+      }else if(params.data.all){
 
-      if(params.data[])
+      }
       break;
     case "content":
       //Process content and if needs to go to header
+      if(params.src){
+        //Pass content as content and run
+      }
       break;
     case "template":
       //Insert param content into page
