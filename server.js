@@ -18,13 +18,17 @@ function onRequest(request, response){
 
     var page;
     if(request.url.endsWith(".css")){
-      page = "/stylesheet"
+      page = "/stylesheet";
       response.setHeader('Content-Type', 'text/css');
       console.log("CSS");
     }else if(request.url.endsWith(".js")){
-      page = "/javascript"
+      page = "/javascript";
       console.log("JS");
       response.setHeader('Content-Type', 'application/javascript');
+    }else if(request.url.endsWith(".php")){
+      page = "/php";
+      console.log("PHP");
+      response.setHeader('Content-Type', 'text/plain')
     }else{
       page = "";
     }
