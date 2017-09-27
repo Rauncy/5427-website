@@ -1,9 +1,24 @@
 const http = require('http');
 const fs = require('fs');
 const path = require('path');
+const mysql = require('mysql');
 
 var server;
 var configs = {};
+var mysqlConnection = mysql.createConnection({
+	host: "localhost",
+	user: "admin",
+	password: "admin"
+})
+
+connection.connect(function(err) {
+	if(err) throw err;
+	console.log("Connected to MySQL");
+})
+connection.query("use Robotics", function(err) {
+	if(err) throw err;
+	console.log("Server is using the database Robotics");
+})
 
 function onRequest(request, response){
   console.log();
