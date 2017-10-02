@@ -2,20 +2,22 @@ const http = require('http');
 const fs = require('fs');
 const path = require('path');
 const mysql = require('mysql');
+const ejs = require('ejs');
+
 
 var server;
 var configs = {};
-var mysqlConnection = mysql.createConnection({
+var database = mysql.createConnection({
 	host: "localhost",
 	user: "admin",
 	password: "admin"
 })
 
-connection.connect(function(err) {
+database.connect(function(err) {
 	if(err) throw err;
 	console.log("Connected to MySQL");
 })
-connection.query("use Robotics", function(err) {
+database.query("use Robotics", function(err) {
 	if(err) throw err;
 	console.log("Server is using the database Robotics");
 })
@@ -108,71 +110,10 @@ function loadHTML(url, res){
 }
 
 function processInlineCFGs(html, path, reference, data){
-  var tempHTML = html;
-  var toProcess;
-  if(!data) data = {
-    lineRef:{}
-  }};
-
-  while(tempHTML.includes("<cfg>")){
-    //Get raw text
-    toProcess=JSON.parse(tempHTML.substring(tempHTML.indexOf("<cfg>")+5, tempHTML.indexOf("</cfg>")));
-
-    //Test for type
-    if(toProcess.type){
-      if(toProcess.type=="content"){
-        //See if content is for header or is fragment
-        if(toProcess.src){
-          //Template render
-          html = html.substring(html.indexOf("</cfg>")+6);
-          return processInlineCFGs(fs.readFileSync(`./webpages/${toProcess.src}.html`, "UTF-8"), "/"+toProcess.src, html);
-        }else if(toProcess.src){
-          //Fragment
-          return html.substring(html.indexOf("</cfg>")+6);
-        }else{
-
-        }
-      } else if(toProcess.type=="template"){
-        if(reference){
-          tempHTML=tempHTML.substring(0, tempHTML.indexOf("<cfg>"))+reference+tempHTML.substring(tempHTML.indexOf("</cfg>")+6);
-          //Process CSS and JS fields TODO
-          continue;
-        }else{
-          console.log('Configs with a type of "template" must have a valid "content" html to load into');
-        }
-      }else if(toProcess.type=="fragment"){
-        let fragFile = fs.readFileSync(`./webpages/${toProcess.src}.html`, "UTF-8");
-        fragFile = processInlineCFGs(fragFile, toProcess.src, toProcess.data);
-        tempHTML = tempHTML.substring(0, tempHTML.indexOf("<cfg>"))+fragFile+tempHTML.substring(tempHTML.indexOf("</cfg>")+6);
-      }else if(toProcess.type=="data"){
-        //Do data
-
-      }else if(toProcess.type == "link"){
-        if(src){
-          //Place in HTML
-        }else if(type){
-          //Set positons
-        }else{
-          //None applicable
-        }
-        let end = toProcess.src.substring(toProcess.indexOf("."));
-        if(data.lineRef[end]){
-          //Insert at line
-          tempHTML.
-        }else{
-          //Insert where declared
-        }
-      }else{
-        console.log(`Type "${type}" not recognized in ${path}`)
-      }
-    }
-
-    tempHTML=tempHTML.substring(0, tempHTML.indexOf("<cfg>")) + tempHTML.substring(tempHTML.indexOf("</cfg>")+6);
-  }
-
-  //Do data and other processing after initial template and fragment processing
-
-  return tempHTML;
+	var toProcess = new EJS();
+	toProcess.text = html;
+	html = toProcess.render({});
+	return html;
 }
 
 function reloadServerCFGs(){
