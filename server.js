@@ -53,7 +53,7 @@ function onRequest(request, response){
     var path = request.url.substring(7, request.url.length);
 
     try{
-      page = fs.readFile(`./_assets${page}${path}`, "UTF-8");
+      page = fs.readFileSync(`./_assets${page}${path}`, "UTF-8");
       response.writeHead(200);
     }catch(err){
       console.log("Asset Error");
@@ -68,7 +68,7 @@ function onRequest(request, response){
     console.log(`Getting data from ${request.url}`);
   }else{
     //Is HTML page
-    console.log("HTML");
+    console.log("HTML: " + request.url);
     page = loadHTML(request.url, response);
   }
   response.write(page);
@@ -85,24 +85,24 @@ function loadHTML(url, res){
   //If has with illegal characters
   if(url.includes("^") || url.includes("_")) {
     res.writeHead(404);
-    path = fs.readFile("./_assets/404.html", "UTF-8");
+    path = fs.readFileSync("./_assets/404.html", "UTF-8");
     console.log(`Data404 : ${url}`);
   }else{
     //Check for non index Files
     try{
-      console.log(`/webpages${url}/index.html : ${url}`);
-      path = fs.readFile(`./webpages${url}/index.html`, "UTF-8");
+      console.log(`/webpages${url}index.html : ${url}`);
+      path = fs.readFileSync(`webpages${url}index.html`, "UTF-8");
       res.writeHead(200);
     }catch(nie){
       //Check for index files
       try{
         console.log(`/webpages${url}.html : ${url}`);
-        path = fs.readFile(`./webpages${url}.html`, "UTF-8");
+        path = fs.readFileSync(`./webpages${url}.html`, "UTF-8");
         res.writeHead(200);
       }catch(err){
         //Return 404;
         res.writeHead(404);
-        path = fs.readFile("./_assets/404.html", "UTF-8");
+        path = fs.readFileSync("./_assets/404.html", "UTF-8");
         console.log(`DNE404 : ${url}`);
       }
     }
@@ -110,7 +110,7 @@ function loadHTML(url, res){
 
 	console.log(`${path} ${url} `);
 
-  //path = processInlineCFGs(path, url);
+  path = processInlineCFGs(path, url);
 
   return path;
 }
