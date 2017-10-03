@@ -1,2 +1,0 @@
-node sqltestserver.js
-PAUSE

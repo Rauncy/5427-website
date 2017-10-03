@@ -7,20 +7,24 @@ const ejs = require('ejs');
 
 var server;
 var configs = {};
-var database = mysql.createConnection({
+const DB_MASTER= mysql.createConnection({
 	host: "localhost",
 	user: "admin",
 	password: "admin"
-})
+});
 
-database.connect(function(err) {
-	if(err) throw err;
-	console.log("Connected to MySQL");
-})
-database.query("use Robotics", function(err) {
-	if(err) throw err;
-	console.log("Server is using the database Robotics");
-})
+function setupDatabase(database){
+	DB_MASTER.connect(function(err) {
+		if(err) console.log("Error connecting to database");
+		else{
+			console.log("Connected to MySQL");
+			DB_MASTER.query("use " + database, function(err) {
+				if(err) console.log("Error connecting to the database " + robotics);
+				else console.log("Server is using the database " + databse);
+			});
+		}
+	});
+}
 
 function onRequest(request, response){
   console.log();
@@ -49,7 +53,7 @@ function onRequest(request, response){
     var path = request.url.substring(7, request.url.length);
 
     try{
-      page = fs.readFileSync(`./_assets${page}${path}`, "UTF-8");
+      page = fs.readFile(`./_assets${page}${path}`, "UTF-8");
       response.writeHead(200);
     }catch(err){
       console.log("Asset Error");
@@ -81,38 +85,46 @@ function loadHTML(url, res){
   //If has with illegal characters
   if(url.includes("^") || url.includes("_")) {
     res.writeHead(404);
-    path = fs.readFileSync("./_assets/404.html", "UTF-8");
+    path = fs.readFile("./_assets/404.html", "UTF-8");
     console.log(`Data404 : ${url}`);
   }else{
     //Check for non index Files
     try{
       console.log(`/webpages${url}/index.html : ${url}`);
-      path = fs.readFileSync(`./webpages${url}/index.html`, "UTF-8");
+      path = fs.readFile(`./webpages${url}/index.html`, "UTF-8");
       res.writeHead(200);
     }catch(nie){
       //Check for index files
       try{
         console.log(`/webpages${url}.html : ${url}`);
-        path = fs.readFileSync(`./webpages${url}.html`, "UTF-8");
+        path = fs.readFile(`./webpages${url}.html`, "UTF-8");
         res.writeHead(200);
       }catch(err){
         //Return 404;
         res.writeHead(404);
-        path = fs.readFileSync("./_assets/404.html");
+        path = fs.readFile("./_assets/404.html", "UTF-8");
         console.log(`DNE404 : ${url}`);
       }
     }
   }
 
-  path = processInlineCFGs(path, url, null);
+	console.log(`${path} ${url} `);
+
+  //path = processInlineCFGs(path, url);
 
   return path;
 }
 
-function processInlineCFGs(html, path, reference, data){
-	var toProcess = new EJS();
-	toProcess.text = html;
-	html = toProcess.render({});
+function processInlineCFGs(html, content){
+	if(content === null) content = {};
+
+	if(content.topPage){
+		console.log("Template to render sequence not implemented");
+	}
+
+	console.log(html);
+
+	html = ejs.render(html);
 	return html;
 }
 
@@ -122,4 +134,5 @@ function reloadServerCFGs(){
 
 server = http.createServer(onRequest);
 server.listen(3000);
+setupDatabase("Robotics");
 console.log("Server is now running...");
