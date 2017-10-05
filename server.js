@@ -15,11 +15,11 @@ const DB_MASTER= mysql.createConnection({
 
 function setupDatabase(database){
 	DB_MASTER.connect(function(err) {
-		if(err) throw err;//console.log("Error connecting to database");
+		if(err) console.log("Error connecting to database");
 		else{
 			console.log("Connected to MySQL");
 			DB_MASTER.query("use " + database, function(err) {
-				if(err) console.log("Error connecting to the database " + robotics);
+				if(err) console.log("Error connecting to the database " + database);
 				else console.log("Server is using the database " + database);
 			});
 		}
@@ -32,12 +32,24 @@ function onRequest(request, response){
   if(request.url.startsWith("/_db/")){
     //DB is database calls
     //Replace delimited characters with proper characters
-    var reqdata = request.url.split("%7B").join("{");
+		var reqdata = request.url.substring(5);
+    reqdata = reqdata.split("%7B").join("{");
     reqdata = reqdata.split("%7D").join("}");
     reqdata = reqdata.split("%20").join(" ");
-    reqdata = JSON.parse(request.url.substring(5));
-    if(reqdata.data) DB_MASTER.query(reqdata.data);
-    console.log(`Database access with raw of ${request.url} and a request of ${reqdata}`);
+		reqdata = reqdata.split("%22").join("\"");
+		console.log(`Database access with raw of ${request.url} and a request of ${reqdata}`);
+    reqdata = JSON.parse(reqdata);
+    if(reqdata.data){
+			DB_MASTER.query(reqdata.data, function(err, result){
+				if(err) page = err.toString();
+				else page = result;
+				console.log(`P: ${page} R: ${result}`);
+				if(!page || page == undefined) page = "No output";
+			});
+			console.log(page);
+			response.setHeader('Content-Type', 'text/plain');
+			response.writeHead(200);
+		}
   }else if(request.url.startsWith("/_asset/")){
     //Asset is Javascript or CSS
 
