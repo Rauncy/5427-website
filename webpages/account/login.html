@@ -1,10 +1,13 @@
-<cfg>{"type":"content", "src":"^header", "spreadsheets":{}, "scripts":{}}</cfg>
+<link href="https://fonts.googleapis.com/css?family=Anton|Josefin+Sans|Open+Sans|Oswald|Poppins|Princess+Sofia|Titillium+Web" rel="stylesheet">
+  <link rel = "stylesheet"  href = "/_asset/header-main.css">
+    <script src = "/_asset/header-main.js" defer></script>
+    <%- head%>
 <link rel = "stylesheet"  href = "/_asset/login.css">
 <h2><i>Log in<i></h2>
 <p id = "sub">To access the extensive database and gain key features</p>
 <hr>
 <div id="content">
-  <form class="logIn" action="/_asset/settings.php" method="post">
+  <form class="logIn" action="location.reload()" method="post">
       <p class = "labelLog">E - Mail: <input type = "text" id = "logInEmail" placeholder="johnappleseed@gmail.com"></p>
       <p class = "labelLog" id = "pass">Password: <input type="password" id="logInPassword" placeholder="******"></p>
       <button id = "submit">
@@ -17,4 +20,3 @@
 
   </form>
 </div>
-   
