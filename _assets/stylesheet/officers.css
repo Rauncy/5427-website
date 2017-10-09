@@ -2,13 +2,14 @@ table {
 font-family: arial, sans-serif;
 border-collapse: collapse;
 width: 100%;
+
 }
 
 td,th {
 border: 1px dashed #aaa;
 text-align: center;
 padding: 5px;
-
+position: relative;
 }
 th{
   max-width: 7.5em;
@@ -20,7 +21,7 @@ background-color: #dddddd;
 }
 
 .officerPic{
-  float:left;
+  float:center;
   /*margin-right: -300px;*/
   border-radius: 20%;
 }
