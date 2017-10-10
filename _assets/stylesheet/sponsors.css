@@ -1,11 +1,11 @@
 td, th {
   /*  width:100%; */
-    min-width: 20em;
+    min-width: 3em;
     margin-left:2em;
     margin-right:auto;
     margin:0px;
     height: 100px;
-    border: 1px solid rgb(23,65,156);
+    border: .3em solid rgb(23,65,156);
     text-align: left;
     padding: 8px;
 }
@@ -17,4 +17,91 @@ table{
 }
 tr:nth-child(even) {
     background-color: rgb(256,256,256);
+}
+
+header{
+  width:100%;
+  min-width: 540px;
+  margin:0px;
+  text-align:center;
+  background-color: #121c59;
+  background: linear-gradient(0deg, #333333, #121c59 20%);
+  height: 100px;
+
+}
+
+/*Header CSS*/
+
+#tabs{
+  position: sticky;
+  top: 0px;
+  width : 100%;
+}
+
+#list{
+  /*min-width: 40%;
+  margin: auto;*/
+     background-color: #333333;
+     min-height: 3em;
+     margin-top:0;
+     padding-top:10px;
+     padding-left:5px;
+     min-width: 535px;
+     text-align: left;
+
+}
+#mainsponsorcontent{
+width:60%;
+margin-left:auto;
+margin-right:auto;
+}
+
+.horizm{
+  display: inline;
+  font-family: 'Oswald', sans-serif;
+  color: white;
+  font-size: 1.5em;
+  padding: 3px;
+  text-decoration: none;
+}
+
+.horizm > a{
+  text-decoration: inherit;
+  color: inherit;
+}
+
+.dropbtn{
+
+}
+
+.active{
+  background-color: crimson;
+}
+
+#content{
+  background-color:#E0E0E0;
+  margin-left:16px;
+  margin-right:16px;
+}
+
+#content > p{
+  margin:0;
+  font-size: 24px;
+}
+body{
+  margin:0;
+}
+a{
+  font-family: 'Anton', sans-serif;
+  color: crimson;
+}
+a:hover{
+  color: navy;
+}
+.tab, .horizm{
+  font-family: 'Anton', sans-serif;
+  color: white;
+}
+.tab:hover, .horizm:hover{
+  color: #DDDDFF;
 }
