@@ -10,7 +10,7 @@
            "<nav id = 'tabs'>" +
              "<ul id='list'>" +
               "<li class ='horizm'><a class = 'tab' href = '/officers'>Officers</a></li>" +
-              "<li class ='horizm'><a class = 'tab'  href = '/archive/teams'>Teams</a></li>" +
+              "<li class ='horizm'><a class = 'tab'  href = '/teams'>Teams</a></li>" +
               "<li class ='horizm'><a class = 'tab'  href = '/members'>Members</a></li>" +
               " <li class ='horizm'><a class = 'tab'  href = '/schedule'>Schedule</a></li>" +
               "<li class ='horizm'><a class = 'tab'  href = '/contactinfo/contactinfo'>Contact Us</a></li>" +
